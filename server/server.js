@@ -1,27 +1,35 @@
 require('dotenv').config();
 const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
 const path = require('path');
-const connectDB = require('./config/db');
-const authRoutes = require('./routes/authRoutes');
 
-const app = express(); // 1. INITIALIZE FIRST
-
-// Connect Database
-connectDB();
-
-// Middleware
+const app = express();
 app.use(express.json());
+app.use(cors());
 
-// 2. POINT TO "public" FOLDER (Your folder in the screenshot)
-app.use(express.static(path.join(__dirname, '../public')));
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("✅ MongoDB Connected"))
+    .catch(err => console.log("❌ DB Error:", err));
 
 // API Routes
+const authRoutes = require('./routes/authRoutes');
 app.use('/api/auth', authRoutes);
 
-// 3. ROOT ROUTE (Must be after 'app' is defined)
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/login.html'));
+// Serve Static Files (The Navy UI)
+app.use(express.static(path.join(__dirname, '../public')));
+
+// Fallback for SPA
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
+// For local testing
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => console.log(`🚀 Server on port ${PORT}`));
+}
+
+// Export for Vercel
+module.exports = app;
