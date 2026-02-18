@@ -6,13 +6,23 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
-        <h2 style="margin-bottom: 20px;">Login to System</h2>
-        <input type="email" id="email" placeholder="Email Address">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="login()">Access Dashboard</button>
-        <p style="margin-top:15px; font-size:13px; color:#94a3b8;">New user? <a href="register.html" style="color:var(--accent)">Create Account</a></p>
+    <div class="login-card">
+    <div class="status-pill">
+        <span class="dot"></span> System status: <span style="color: #10b981; margin-left: 4px;"> Live Connection</span>
     </div>
+
+    <h2>Login to <span class="highlight">CoreAuth</span></h2>
+    <p style="color: #64748b; margin-bottom: 30px;">Enter your credentials to access the directory.</p>
+
+    <input type="email" id="email" placeholder="Email Address">
+    <input type="password" id="password" placeholder="Password">
+    
+    <button onclick="login()">Access Dashboard</button>
+    
+    <p class="footer-link">
+        New user? <a href="register.html">Create Account</a>
+    </p>
+</div>
 
     <script>
         async function login() {
