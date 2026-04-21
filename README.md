@@ -48,3 +48,7 @@ Users can sign up, log in, and interact with the system, with data securely stor
 ### 4️⃣ Data Storage
 - All user data is stored in MongoDB  
 - Backend handles CRUD operations  
+---
+## 📄 License
+This project is licensed under the MIT License.
+
